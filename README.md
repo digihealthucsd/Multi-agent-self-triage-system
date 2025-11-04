@@ -55,7 +55,7 @@ You can interact with the system through a web-based user interface for conversa
 1. Run: `python System/user_interface.py`
 2. The script will display two URLs:
    - First URL: for local use (localhost)
-   - Second URL: for public access (if using a service like ngrok)
+   - Second URL: for public access
 
 **Note:** Currently, `Flowcharts/flowcharts.py` only contains the Feeling Generally Ill Flowchart. To query about other symptoms, you'll need to add more flowcharts to the file.
 
