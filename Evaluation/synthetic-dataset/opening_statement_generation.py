@@ -11,11 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 import Utils.utils as utils
 
 def LLM_generate_openings_brief(context, model, num):
-<<<<<<< HEAD
     """Generate brief opening statements with demographics according to the flowchart description."""
-=======
-    """Generate brief opening statements with demographics using LLM according to the flowchart context."""
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     
     prompt = ChatPromptTemplate.from_template(
         "Task: Generate {num} distinct sets of patient demographics and BRIEF opening statements according to the following flowchart.\n"
@@ -31,11 +27,7 @@ def LLM_generate_openings_brief(context, model, num):
     return opening
 
 def LLM_generate_openings_detailed(context, model, num):
-<<<<<<< HEAD
     """Generate detailed opening statements with demographics according to the flowchart description."""
-=======
-    """Generate detailed opening statements with demographics using LLM according to the flowchart context."""
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     
     prompt = ChatPromptTemplate.from_template(
         "Task: Generate {num} distinct sets of patient demographics and DESCRIPTIVE opening statements according to the following flowchart.\n"
@@ -205,12 +197,6 @@ def fix_opening(file_folder, flowchart_description_file, models, num):
 def args():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--flowchart_dir", type=str, default="../../Flowcharts")
-<<<<<<< HEAD
-=======
-    parser.add_argument("--platform", type=str, default="OPENAI")
-    parser.add_argument("--system_model", type=str, default="gpt-4o-mini")
-    parser.add_argument("--temperature", type=float, default=0.0)
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     parser.add_argument("--output_dir", type=str, default=str(Path(__file__).parent.resolve()))
 
     args, _ = parser.parse_known_args()
@@ -225,17 +211,12 @@ if __name__ == "__main__":
     output_dir = args.output_dir
 
     # set file paths
-<<<<<<< HEAD
     flowchart_description_file = os.path.join(flowchart_dir, "flowchart_descriptions.txt")
-=======
-    flowchart_description_eva_file = os.path.join(flowchart_dir, "flowchart_descriptions.txt")
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     output_openings_dir = os.path.join(output_dir, "generated-openings")
 
     # define models for evaluation
     utils.set_up_api_keys()
 
-<<<<<<< HEAD
     # model for generation
     gpt4o_flex = utils.platform_selection("OPENAI", 0.5, "gpt-4o")
     gemini_lite_flex = utils.platform_selection("GOOGLE", 0.5, "gemini-2.0-flash-lite")
@@ -250,26 +231,3 @@ if __name__ == "__main__":
     model_for_generation = {"gpt4o": gpt4o_flex, "deepseek_chat": deepseek_chat_flex, "gemini_lite": gemini_lite_flex, "claude_haiku": claude_haiku_flex} # 
     generate_openings_with_different_models(input_file=flowchart_description_file, models=model_for_generation, num=num_of_openings, output_dir=output_openings_dir)
     fix_opening(output_openings_dir, flowchart_description_file, model_for_generation, num_of_openings)
-=======
-    # model for the system
-    llm = utils.platform_selection(platform, temperature, model) # system 
-    gpt4o = utils.platform_selection("OPENAI", temperature, "gpt-4o")
-    gpt4o_flex = utils.platform_selection("OPENAI", 0.5, "gpt-4o")
-    gpt4o_mini = utils.platform_selection("OPENAI", temperature, "gpt-4o-mini")
-    gpt41_mini = utils.platform_selection("OPENAI", temperature, "gpt-4.1-mini")
-    gemini_lite = utils.platform_selection("GOOGLE", temperature, "gemini-2.0-flash-lite")
-    gemini_lite_flex = utils.platform_selection("GOOGLE", 0.5, "gemini-2.0-flash-lite")
-    claude_haiku = utils.platform_selection("ANTHROPIC", temperature, "claude-3-haiku-20240307")
-    claude_haiku_flex = utils.platform_selection("ANTHROPIC", 0.5, "claude-3-haiku-20240307")
-    deepseek_chat = utils.platform_selection("DEEPSEEK", temperature, "deepseek-chat")
-    deepseek_chat_flex = utils.platform_selection("DEEPSEEK", 0.5, "deepseek-chat")
-
-    # Evaluation
-    print()
-    print("***********************************")
-    print("START EVALUATION - FLOWCHART RETRIEVAL")
-    num_of_openings = 10
-    model_for_generation = {"gpt4o": gpt4o_flex} # , "deepseek_chat": deepseek_chat_flex, "gemini_lite": gemini_lite_flex, "claude_haiku": claude_haiku_flex
-    generate_openings_with_different_models(input_file=flowchart_description_eva_file, models=model_for_generation, num=num_of_openings, output_dir=output_openings_dir)
-    fix_opening(output_openings_dir, flowchart_description_eva_file, model_for_generation, num_of_openings)
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918

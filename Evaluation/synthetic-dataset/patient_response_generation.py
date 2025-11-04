@@ -30,11 +30,7 @@ def check_user_response_completion(input_dir):
     return False
 
 def LLM_generate_user_responses(context, model, answer, num, pattern, definition):
-<<<<<<< HEAD
     """Generate user responses with the defined pattern and definition."""
-=======
-    """Generate user responses using LLM."""
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     
     prompt = ChatPromptTemplate.from_template(
         "Task: Provide {num} distinct ways to respond {answer} to the following question.\n"
@@ -47,14 +43,10 @@ def LLM_generate_user_responses(context, model, answer, num, pattern, definition
     return generation
 
 def LLM_generate_user_responses_claude(context, model, answer, num, pattern, definition):
-<<<<<<< HEAD
     """Generate user responses using Claude. 
        Since Claude tends to refuse to generate user responses for certain questions,
        we include a separate generation function for Claude.
     """
-=======
-    """Generate user responses using Claude."""
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     
     system_prompt = (
         "Role: You are an assistant for a medical fiction author who is creating a character seeking help through an online triage system."
@@ -262,12 +254,6 @@ def fix_user_response(file_folder, models, num):
 def args():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--flowchart_dir", type=str, default="../Flowcharts")
-<<<<<<< HEAD
-=======
-    parser.add_argument("--platform", type=str, default="OPENAI")
-    parser.add_argument("--system_model", type=str, default="gpt-4o-mini")
-    parser.add_argument("--temperature", type=float, default=0.0)
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     parser.add_argument("--output_dir", type=str, default=str(Path(__file__).parent.resolve()))
 
     args, _ = parser.parse_known_args()
@@ -282,16 +268,11 @@ if __name__ == "__main__":
     output_dir = args.output_dir
 
     # set file paths
-<<<<<<< HEAD
-=======
-    flowchart_description_eva_file = os.path.join(flowchart_dir, "flowchart_descriptions.txt")
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     responses_dir = os.path.join(output_dir, "generated-responses")
 
     # define models for evaluation
     utils.set_up_api_keys()
 
-<<<<<<< HEAD
     # model for generation
     gpt4o_flex = utils.platform_selection("OPENAI", 0.5, "gpt-4o")
     gemini_lite_flex = utils.platform_selection("GOOGLE", 0.5, "gemini-2.0-flash-lite")
@@ -306,28 +287,6 @@ if __name__ == "__main__":
     num_of_user_responses = 5 # define the number of user responses for each question in the flowchart
     # get a list of all flowcharts
     flowchart_list = utils.get_flowchart_list()
-=======
-    # model for the system
-    llm = utils.platform_selection(platform, temperature, model) # system 
-    gpt4o = utils.platform_selection("OPENAI", temperature, "gpt-4o")
-    gpt4o_flex = utils.platform_selection("OPENAI", 0.5, "gpt-4o")
-    gpt4o_mini = utils.platform_selection("OPENAI", temperature, "gpt-4o-mini")
-    gpt41_mini = utils.platform_selection("OPENAI", temperature, "gpt-4.1-mini")
-    gemini_lite = utils.platform_selection("GOOGLE", temperature, "gemini-2.0-flash-lite")
-    gemini_lite_flex = utils.platform_selection("GOOGLE", 0.5, "gemini-2.0-flash-lite")
-    claude_haiku = utils.platform_selection("ANTHROPIC", temperature, "claude-3-haiku-20240307")
-    claude_haiku_flex = utils.platform_selection("ANTHROPIC", 0.5, "claude-3-haiku-20240307")
-    deepseek_chat = utils.platform_selection("DEEPSEEK", temperature, "deepseek-chat")
-    deepseek_chat_flex = utils.platform_selection("DEEPSEEK", 0.5, "deepseek-chat")
-
-    # Evaluation
-    print()
-    print("***********************************")
-    print("START EVALUATION - FLOWCHART FOLLOWING")
-    model_for_generation = {"gpt4o": gpt4o_flex}
-    flowchart_list = utils.get_flowchart_list()
-    num_of_user_responses = 5
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     # generate user responses
     generate_user_response_with_different_models(flowchart_list=flowchart_list, model_dict=model_for_generation, n=num_of_user_responses, output_dir=responses_dir)
     fix_user_response(file_folder=responses_dir, models=model_for_generation, num=num_of_user_responses)

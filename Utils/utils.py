@@ -23,29 +23,13 @@ def set_up_api_keys():
     deepseek_api_key = "your-deepseek-api-key"
     os.environ["DEEPSEEK_API_KEY"] = deepseek_api_key
 
-<<<<<<< HEAD
-=======
-def safe_json_parser(text):
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        # If JSON parsing fails, assume it's using single quotes and convert
-        if 'np.float32(' in text:
-            text = re.sub(r'np\.float32\(([^)]+)\)', r'\1', text)
-        return ast.literal_eval(text)
-
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
 def platform_selection(platform, temp, model):
     """Select and initialize the appropriate LLM based on the platform."""
     
     if platform == "OPENAI":
         llm = ChatOpenAI(temperature=temp, model=model)
     elif platform == "GOOGLE":
-<<<<<<< HEAD
         vertexai.init(project="your-project-id", location="your-location")
-=======
-        vertexai.init(project="your-project-id", location="your-project-location")
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
         llm = ChatVertexAI(temperature=temp, model=model)
     elif platform == "ANTHROPIC":
         llm = ChatAnthropic(temperature=temp, max_tokens=2048, model=model)
@@ -56,7 +40,6 @@ def platform_selection(platform, temp, model):
     
     return llm
 
-<<<<<<< HEAD
 def safe_json_parser(text):
     try:
         # if valid JSON
@@ -67,8 +50,6 @@ def safe_json_parser(text):
             text = re.sub(r'np\.float32\(([^)]+)\)', r'\1', text)
         return ast.literal_eval(text)
 
-=======
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
 def parse_rag_output(answer):
     """Parse the RAG output to extract the flowchart name or handle special cases."""
     
@@ -82,11 +63,7 @@ def parse_rag_output(answer):
         return f"Not a valid RAG output: {answer}"
     
 def flowchart_categories():
-<<<<<<< HEAD
     """Categorize flowcharts into 10 medical specialties."""
-=======
-    """Define categories of flowcharts."""
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
 
     general_medicine = ["Feeling Generally Ill Flowchart", "Unexplained Weight Loss Flowchart", "Overweight Flowchart", "Fever Flowchart", "Fever In Young Children Flowchart", "Fever In Children Flowchart", "Excessive Sweating Flowchart", "Slow Weight Gain In Young Children Flowchart"]
     neurology = ["Feeling Faint And Fainting Flowchart", "Dizziness Flowchart", "Headache Flowchart", "Numbness Or Tingling Flowchart", "Twitching And Trembling Flowchart", "Pain In The Face Flowchart", "Confusion Flowchart", "Confusion In Older People Flowchart", "Impaired Memory Flowchart", "Difficulty Speaking Flowchart"]
@@ -114,11 +91,7 @@ def get_flowchart_list():
     return flowchart_list
 
 def get_flowchart(answer):
-<<<<<<< HEAD
     """Get the flowchart from the flowchart databse based on the RAG output answer."""
-=======
-    """Retrieve the flowchart and graph based on the RAG output answer."""
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     
     if "no flowchart available" in answer:
         return "no authorization to answer"

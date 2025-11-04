@@ -2,10 +2,6 @@ import pandas as pd
 import os
 import numpy as np
 import glob
-<<<<<<< HEAD
-=======
-import matplotlib.pyplot as plt
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
 from collections import defaultdict
 
 def convert_model_names_for_plot(model_list):
@@ -50,15 +46,8 @@ def get_model_overall_accuracy(input_dir, model):
     print(f"Overall accuracy for {model}: {overall_accuracy}")
     return overall_accuracy * 100
 
-<<<<<<< HEAD
 def calculate_flowchart_navigation_overall_accuracy(input_dir, model_list):
     """Calculate overall accuracy for flowchart navigation across specified models."""
-=======
-def calculate_decision_overall_accuracy(input_dir, model_list):
-    """Calculate overall accuracy for decision agent unit test across specified models."""
-
-    print("Plotting overall accuracy for unit test (decision agent)...")
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     
     accuracies = {}
     
@@ -69,11 +58,7 @@ def calculate_decision_overall_accuracy(input_dir, model_list):
     
     print("Overall accuracies:", accuracies)
         
-<<<<<<< HEAD
 def calculate_flowchart_navigation_pattern_accuracy(input_dir, model):
-=======
-def calculate_decision_model_pattern_accuracy(input_dir, model):
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
     """Calculate the accuracy for each pattern in each flowchart for a given model, based on pattern criteria."""
     
     flowchart_files = glob.glob(os.path.join(input_dir, '*.csv'))
@@ -128,32 +113,17 @@ def calculate_decision_model_pattern_accuracy(input_dir, model):
 def calculate_decision_pattern_accuracy(input_dir, model_list):
     """Calculate pattern accuracies for each model."""
     print("=====================================")
-<<<<<<< HEAD
     print("Calculating pattern accuracy for flowchart navigation...")
     
     for i in range(len(model_list)):
         model_folder = os.path.join(input_dir, model_list[i])
         calculate_flowchart_navigation_model_pattern_accuracy(model_folder, model_list[i])        
-=======
-    print("Calculating pattern accuracy for unit test (decision agent)...")
-    
-    for i in range(len(model_list)):
-        model_folder = os.path.join(input_dir, model_list[i])
-        calculate_decision_model_pattern_accuracy(model_folder, model_list[i])        
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
         
 if __name__ == "__main__":
     current_dir = os.getcwd()
     results_folder = os.path.join(current_dir, "results")
 
-<<<<<<< HEAD
     model_list = ["gpt4o", "claude_haiku", "gemini_lite", "deepseek_chat"]
     
     calculate_flowchart_navigation_overall_accuracy(results_folder, model_list)
     calculate_flowchart_navigation_pattern_accuracy(results_folder, model_list)
-=======
-    model_list = ["gpt4o", "claude_haiku", "gemini_lite", "deepseek_chat"] #
-    
-    calculate_decision_overall_accuracy(results_folder, model_list)
-    calculate_decision_pattern_accuracy(results_folder, model_list)
->>>>>>> e945b45bb8c81334b3db2069277cab1f8f062918
