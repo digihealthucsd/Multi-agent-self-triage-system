@@ -14,13 +14,14 @@ import google.generativeai as genai
 import Flowcharts.flowcharts as flowcharts
 
 def set_up_api_keys():
-    openai_api_key = "your-openai-api-key"
+    # Read from environment variables (loaded from .env by FastAPI)
+    openai_api_key = os.getenv("OPENAI_API_KEY", "your-openai-api-key")
     os.environ["OPENAI_API_KEY"] = openai_api_key
-    gemini_api_key = "your-gemini-api-key"
+    gemini_api_key = os.getenv("GEMINI_API_KEY", "your-gemini-api-key")
     genai.configure(api_key=gemini_api_key)
-    anthropic_api_key = "your-anthropic-api-key"
+    anthropic_api_key = os.getenv("ANTHROPIC_API_KEY", "your-anthropic-api-key")
     os.environ["ANTHROPIC_API_KEY"] = anthropic_api_key
-    deepseek_api_key = "your-deepseek-api-key"
+    deepseek_api_key = os.getenv("DEEPSEEK_API_KEY", "your-deepseek-api-key")
     os.environ["DEEPSEEK_API_KEY"] = deepseek_api_key
 
 def platform_selection(platform, temp, model):

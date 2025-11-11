@@ -1,66 +1,78 @@
-# Multi-agent Self-triage System with Medical Flowcharts
-An open-source, multi-agent conversational self-triage system that guides LLMs using clinically validated medical flowcharts to provide transparent, auditable, and patient-friendly recommendations.
+# TriageMD – Local Setup Notes
 
-## Overview
-Online health resources and large language models (LLMs) are increasingly used as a first point of contact for medical decision-making, yet their reliability in healthcare remains limited by low accuracy, lack of transparency, and susceptibility to unverified information.
+A small triage assistant that combines a FastAPI backend, a React frontend, and a set of AMA flowcharts.
 
-This project introduces a conversational self-triage system that guides LLMs with 100 clinically validated flowcharts from the American Medical Association, providing a structured and auditable framework for patient decision support. The system uses a multi-agent framework:
-- Retrieval agent: identifies the most relevant flowchart
-- Decision agent: navigates the selected flowchart given user responses
-- Chat agent: delivers patient-friendly guidance and next steps
+---
 
-> This software is for research and educational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment.
+## What’s inside
+- `backend/` – FastAPI app that wraps the multi-agent triage logic (retrieval, decision, and chat agents).
+- `frontend/` – Vite + React (with React Flow) for the web UI.
+- `Flowcharts/` – Flowchart metadata and the Python definitions for each graph.
+- `System/` and `Utils/` – Original multi-agent implementation that the API calls under the hood.
 
-## Table of Contents
-- [Overview](#overview)
-- [Flowcharts](#flowcharts)
-- [Setup](#setup)
-- [Usage](#usage)
-- [Demo](#demo)
-- [Citation](#citation)
-- [Contact](#contact)
+---
 
-## Flowcharts
-The flowcharts used in this work are from [American Medical Association Family Medical Guide, 4th Edition](https://www.google.com/books/edition/American_Medical_Association_Family_Medi/LIDuEAAAQBAJ?hl=en&gbpv=0). The flowcharts cover a wide range of symptoms and demographic groups. We preprocessed them into 100 self-triage flowcharts.
+## Requirements
+the stack is minimal:
 
-- `Flowcharts/AMA_flowchart_description_preprocessed.csv` lists the targeted demographic group and description of each flowchart.
-- `Flowcharts/flowchart_descriptions.txt` is a text version of the flowchart description used for retrieval.
-- `Flowcharts/flowcharts.py` contains an example of a preprocessed graph-represented flowchart (Feeling Generally Ill Flowchart).
+- Python 3.10+ (using a virtualenv in `backend/venv`)
+- Node.js 18+
+- An OpenAI API key (the code looks for `OPENAI_API_KEY` in a `.env` file at repo root)
 
-To access all flowcharts in full detail, obtain the original volume from the publisher. And we describe the flowchart preprocess in the Method section.
+also keys for Anthropic, Gemini, or DeepSeek if you want to swap models.
 
+---
 
-## Setup
-To get started locally:
-1. Create and activate a virtual environment (e.g., conda or venv).
-2. Install dependencies:
-   - Run: `python -m pip install -r requirements.txt`
-3. Obtain API keys for model providers
-   - For example, create an OpenAI API key [here](https://platform.openai.com/api-keys).
-4. Configure your API key(s) in `Utils/utils.py` by adding them to the `set_up_api_keys()` function.
+## Backend – run FastAPI locally
 
+```bash
+cd backend
+python -m venv venv          # only the first time
+source venv/bin/activate     # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn api.main:app --reload --port 8000
+```
 
-## Usage
-- `System`: contains the scripts for multi-agent system implementation and a user interface demo.
-- `Evaluation`: contains the scripts and result examples for the evaluation tasks
-    - `synthetic-dataset`: contains the scripts for generating synthetic data (both opening statements and patient responses) with four different models. We also provide generated data samples for Feeling Generally Ill Flowchart.
-    - `flowchart-retrieval`: contains the script for testing flowchart retrieval performance, as well as the example results for Feeling Generally Ill Flowchart.
-    - `flowchart-navigation`: contains the script for testing flowchart navigation performance, as well as the example results for Feeling Generally Ill Flowchart.
+By default the API listens on `http://localhost:8000`. 
 
+---
 
-## Demo
-You can interact with the system through a web-based user interface for conversational self-triage.
+## Frontend – run the React dev server
 
-**To run the demo:**
-1. Run: `python System/user_interface.py`
-2. The script will display two URLs:
-   - First URL: for local use (localhost)
-   - Second URL: for public access
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-**Note:** Currently, `Flowcharts/flowcharts.py` only contains the Feeling Generally Ill Flowchart. To query about other symptoms, you'll need to add more flowcharts to the file.
+Vite serves the UI on `http://localhost:5173`. It expects the backend API at `http://localhost:8000` (configured in `frontend/.env.development`).
 
-## Citation
-If you use this repository in academic work, please consider citing it. 
+---
 
-## Contact
-If you have any questions, feel free to contact us via email at nyjliu@ucsd.edu or open a GitHub Issue.
+## Environment variables
+
+1. Create a `.env` file at the repo root:
+   ```
+   OPENAI_API_KEY=sk-xxxx
+   ```
+   (Add other provider keys if you plan to use them.)
+
+2. The backend loads this file before starting FastAPI, so you don’t have to edit code to switch keys.
+
+---
+
+## End-to-end test
+
+1. Start the backend (port 8000).
+2. Start the frontend (port 5173).
+3. Visit `http://localhost:5173` and follow the flow:
+   - Choose “Myself”.
+   - Fill in name / sex / age.
+   - Start the chat and type something like “I feel generally ill and tired”.
+   - The UI should show one primary flowchart plus two alternates, the graph should render on the left, and chatting “Yes/No” should highlight the path.
+
+---
+
+## Notes
+- The retrieval endpoint now returns the LLM-selected flowchart and two (or three) alternates so the UI can show multiple options.
+- All third-party dependencies are pinned in the backend requirements file and the frontend `package.json`.

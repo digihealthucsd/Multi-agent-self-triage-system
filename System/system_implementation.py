@@ -62,22 +62,40 @@ def retrieval_agent(filepath, query, llm, k, split=True, retrieve=False):
     
     return conversation
 
-def parse_decision_agent_output(input_dict):
+def parse_decision_agent_output(input_obj):
     """Parse the output from the decision agent into final decisions."""
     
-    if input_dict['isOnTopic'] == "No":
-        return "off-topic"
-    if input_dict['isUncertain'] == "Yes":
-        return "uncertain"
-    elif input_dict['isUncertain'] == "No":
-        if input_dict['actualAnswer'] == "Yes":
-            return "Yes"
-        elif input_dict['actualAnswer'] == "No":
-            return "No"
-        else: 
-            return "not answered"
+    # Handle both Pydantic object and dict
+    if hasattr(input_obj, 'isOnTopic'):
+        # Pydantic object
+        if input_obj.isOnTopic == "No":
+            return "off-topic"
+        if input_obj.isUncertain == "Yes":
+            return "uncertain"
+        elif input_obj.isUncertain == "No":
+            if input_obj.actualAnswer == "Yes":
+                return "Yes"
+            elif input_obj.actualAnswer == "No":
+                return "No"
+            else: 
+                return "not answered"
+        else:
+            raise ValueError(f"Wrong output from decision_agent: {input_obj}")
     else:
-        raise ValueError(f"Wrong output from decision_agent: {input_dict}")
+        # Dict (backward compatibility)
+        if input_obj['isOnTopic'] == "No":
+            return "off-topic"
+        if input_obj['isUncertain'] == "Yes":
+            return "uncertain"
+        elif input_obj['isUncertain'] == "No":
+            if input_obj['actualAnswer'] == "Yes":
+                return "Yes"
+            elif input_obj['actualAnswer'] == "No":
+                return "No"
+            else: 
+                return "not answered"
+        else:
+            raise ValueError(f"Wrong output from decision_agent: {input_obj}")
     
 class DecisionOutput(BaseModel):
     isOnTopic: str = Field(description="'Yes' if the response is relevant to the question, otherwise 'No'.")
