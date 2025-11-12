@@ -32,11 +32,13 @@ To access all flowcharts in full detail, obtain the original volume from the pub
 
 ## Setup
 To get started locally:
-1. Run `bash setup.sh` to setup a conda virtual environment. 
-2. Once setup is complete, activate the environment: `conda activate triagemd`.
-3. Obtain API keys from model providers:
+1. Miniconda or Anaconda is required.
+2. Run `bash setup.sh` to setup a conda virtual environment for this project. 
+   - If you run into problems, let us know.
+3. Once setup is complete, activate the environment: `conda activate triagemd`.
+4. Obtain API keys from model providers:
    - For example, create an OpenAI API key [here](https://platform.openai.com/api-keys).
-4. Configure your API key(s) in `Utils/utils.py` by adding them to the `set_up_api_keys()` function.
+5. Configure your API key(s) in `Utils/utils.py` by adding them to the `set_up_api_keys()` function.
 
 
 ## Usage
