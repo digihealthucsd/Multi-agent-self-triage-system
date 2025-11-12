@@ -132,7 +132,7 @@ def UI_gradio(rag_file, llm, output_file=None):
 
 def args():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--flowchart_dir", type=str, default="../Flowcharts")
+    parser.add_argument("--flowchart_dir", type=str, default="./Flowcharts")
     parser.add_argument("--platform", type=str, default="OPENAI")
     parser.add_argument("--model", type=str, default="gpt-4o-mini") #"gpt-4-0125-preview" "gpt-4o-mini"
     parser.add_argument("--temperature", type=float, default=0.0)

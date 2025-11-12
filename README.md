@@ -32,10 +32,9 @@ To access all flowcharts in full detail, obtain the original volume from the pub
 
 ## Setup
 To get started locally:
-1. Create and activate a virtual environment (e.g., conda or venv).
-2. Install dependencies:
-   - Run: `python -m pip install -r requirements.txt`
-3. Obtain API keys for model providers
+1. Run `bash setup.sh` to setup a conda virtual environment. 
+2. Once setup is complete, activate the environment: `conda activate triagemd`.
+3. Obtain API keys from model providers:
    - For example, create an OpenAI API key [here](https://platform.openai.com/api-keys).
 4. Configure your API key(s) in `Utils/utils.py` by adding them to the `set_up_api_keys()` function.
 
